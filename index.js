@@ -1,3 +1,8 @@
+// bootstrap
+import 'bootstrap';
+// import
+
+
 let itemMainDiv = document.querySelector("#items")
 let orderSideBar = document.querySelector("#order-sidebar")
 
