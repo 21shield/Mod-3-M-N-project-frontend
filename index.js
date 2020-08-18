@@ -142,25 +142,24 @@ let showItemOnSideBar = (item) => {
 }
     
 function addToOrder(item){
-    let currentOrder = currentUser[0].orders[0].id
-    currentUser[0].orders[0].items.push(item)
-    console.log(currentUser[0].orders[0].items[0])
-    debugger
-    fetch(`http://localhost:3000/users/${currentUser[0].id}/${currentOrder}/items`, {
-        method: "POST",
+    let currentOrder = currentUser[0].orders[0]
+    // currentUser[0].orders[0].items.push(item)
+    
+  
+    fetch(`http://localhost:3000/order_items`, {
+        method: "POST"
         headers: {
             "Content-Type" : "application/json"
         },
-        body: JSON.stringify(
-            // get item to add to order items
-            // item that was added must persist to the order
-            {item: item}
-        )
+        body: JSON.stringify({
+            order: currentOrder,
+            item: item
+        })
     })
         .then(r => r.json())
-        .then((newOrder) => {
-            console.log("this is it",newOrder)
-            currentUser[0].orders[0].items.push(newOrderItem)
+        .then((response) => {
+            console.log("this is it",response)
+            currentUser[0].orders[0].items.push(responseItem)
 
         })
 
