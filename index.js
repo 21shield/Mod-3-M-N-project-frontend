@@ -74,6 +74,7 @@ let newOrder = (user) => {
         })
         .then((rsp) => rsp.json())
         .then(newOrder => {
+            
             user.orders.push(newOrder)
             user.orders[0].items.forEach(item => showItemOnSideBar(item))
         })
@@ -143,23 +144,23 @@ let showItemOnSideBar = (item) => {
     
 function addToOrder(item){
     let currentOrder = currentUser[0].orders[0]
-    // currentUser[0].orders[0].items.push(item)
+    //  currentUser[0].orders[0].items.push(item)
     
-  
+    debugger
     fetch(`http://localhost:3000/order_items`, {
-        method: "POST"
+        method: "POST",
         headers: {
             "Content-Type" : "application/json"
         },
         body: JSON.stringify({
-            order: currentOrder,
-            item: item
+            order_id: currentOrder.id,
+            item_id: item.id
         })
     })
         .then(r => r.json())
         .then((response) => {
             console.log("this is it",response)
-            currentUser[0].orders[0].items.push(responseItem)
+            // currentUser[0].orders[0].items.push(response)
 
         })
 
