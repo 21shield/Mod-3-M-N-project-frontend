@@ -1,9 +1,17 @@
 
 // import 'bootstrap';
+let homePage = document.querySelector("#main-page")
 let itemMainDiv = document.querySelector("#items")
 let orderSideBar = document.querySelector("#order-sidebar")
 let loginLink = document.querySelector("#login")
 let loginFormDiv = document.querySelector("#loginform")
+
+let checkoutPage = document.querySelector("#checkout-page")
+let totalDiv = document.querySelector("#items-total")
+let cartDiv = document.querySelector("#cart-items")
+
+let cartBtn = document.querySelector("#cartBtn")
+let checkoutBtn = document.querySelector("#checkout")
 
 let currentUser = []
 
@@ -127,7 +135,7 @@ let turnItemIntoHTML = (item) => {
     })
 
     addButon.addEventListener("click", (event) => {
-        showItemOnSideBar(item)
+        
         addToOrder(item)
     })
         // create a new order item form with the userId and the item clicked by user
@@ -135,18 +143,36 @@ let turnItemIntoHTML = (item) => {
 
 }
 
-let showItemOnSideBar = (item) => {
+let showItemOnSideBar = (item, id) => {
     // add item to users order
     let orderItem = document.createElement("div")
     orderItem.innerHTML = `<h3>${item.name}</h3>`
+    let removeItem = document.createElement("button")
+        removeItem.id = id
+        removeItem.innerText = "remove"
+    orderItem.append(removeItem)
     orderSideBar.append(orderItem)
+
+    removeItem.addEventListener("click", (evt) => {
+        orderItem.innerText = ""
+        let itemId = removeItem.id
+        debugger
+        console.log(itemId);
+        fetch(`http://localhost:3000/order_items/${id}`, {
+            method: "DELETE"
+        })
+        .then(resp => resp.json())
+        .then(emptyObj => {
+            console.log("officially removed")
+        })
+    })
 }
     
 function addToOrder(item){
     let currentOrder = currentUser[0].orders[0]
     //  currentUser[0].orders[0].items.push(item)
     
-    debugger
+   
     fetch(`http://localhost:3000/order_items`, {
         method: "POST",
         headers: {
@@ -158,10 +184,72 @@ function addToOrder(item){
         })
     })
         .then(r => r.json())
-        .then((response) => {
-            console.log("this is it",response)
+        .then((newOrderItem) => {
+            
+            let orderItemId = newOrderItem.id
+            
             // currentUser[0].orders[0].items.push(response)
-
+            showItemOnSideBar(item, orderItemId)
         })
 
+}
+
+cartBtn.addEventListener("click", (evt) => checkout(event))
+checkoutBtn.addEventListener("click", (evt) => checkout(event))
+
+function checkout (event){
+    let currentUserOrder = currentUser[0].orders[0]
+    if(currentUser.length === 1){
+       homePage.innerHTML = ""
+        // access the order
+        currentUserOrder.items.forEach((item) => {
+            // create a div inside 
+            let orderItemDiv = document.createElement("div")
+            let itemImg = document.createElement("img")
+                itemImg.src = item.image
+            let itemName = document.createElement("h2")
+                itemName.innerText = item.name
+            let itemDescription = document.createElement("p")
+                itemDescription.innerText = item.description
+            let itemPrice = document.createElement("p")
+                itemPrice.innerText = `$ ${item.price}.00`
+            let itemCategory = document.createElement("span")
+                itemCategory.innerText = item.category
+            let removeItem = document.createElement("button")
+                removeItem.innerText = "remove"
+            orderItemDiv.append(itemImg, itemName, itemDescription, itemPrice, itemCategory,removeItem)
+            cartDiv.append(orderItemDiv)
+
+            removeItem.addEventListener("click",(evt) => {
+                removeItemFromOrder(item)
+            })
+        })
+
+
+    }else{
+        console.log("you need to sign in ");
+    }
+}
+
+
+
+let removeItemFromOrder = (itemObj) => {
+    let order = currentUser[0].orders[0]
+    let oI = order.order_items 
+
+    debugger
+    // match to orderid and item id
+    // find in our array
+
+    // fetch(`http://localhost:3000/order_items`, {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type" : "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //         order_id: currentOrder.id,
+    //         item_id: item.id
+    //     })
+    // })
+      
 }

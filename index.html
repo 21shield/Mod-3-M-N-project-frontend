@@ -15,7 +15,7 @@
             <nav id= "navBar">
                 <a href="/orders">Home</a>
                  <!--home button shows main page  -->
-                <a href="/css/">Cart</a> 
+                <button id="cartBtn">Cart</button> 
                 <button id= "login">Login</button>   
                 <div id="loginform"></div>
             </nav>
@@ -27,19 +27,22 @@
         </div>
         <div id="order-sidebar">
             <!-- show order-items here -->
+            <div>
+                <button id="checkout"> Checkout </button>
+            </div>
         </div>
     </div>
 
     <div id= "checkout-page" class= "checkout">
-        <div id="total">
-            <div id="prices">
+        <div id="items-total">
+            <div id="cart-items">
                 <!-- display items/prices each in a div-->
                 <!-- quanity -->
             </div>
             <div id="total">
                 <!-- displays total -->
             </div>
-            <div id= "checkout">
+            <div id= "place-order">
                 <!-- has a button that deletes order  -->
             </div>
         </div>
