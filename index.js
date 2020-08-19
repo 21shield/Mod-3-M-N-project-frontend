@@ -19,52 +19,50 @@ let totalPrice = document.querySelector("#total")
 let currentUser = []
 
 loginLink.addEventListener("click", (event) => {
-    loginLink.innerHTML = ""
+    
     loginFormDiv.innerHTML = ""
+    if(loginLink.innerText === "Log In"){
+        loginLink.hidden = true
+        let loginForm = document.createElement("form")
+        let usernameInput = document.createElement("input")
+            usernameInput.id = "username"
+        let loginButton = document.createElement("button")
+            loginButton.innerText = "Login"
+            loginForm.append(usernameInput, loginButton)
+            loginFormDiv.append(loginForm)
 
-    let loginForm = document.createElement("form")
-    let usernameInput = document.createElement("input")
-        usernameInput.id = "username"
-    let loginButton = document.createElement("button")
-        loginButton.innerText = "Login"
-        loginForm.append(usernameInput, loginButton)
-        loginFormDiv.append(loginForm)
+        loginForm.addEventListener("submit", (event) => {
+            event.preventDefault()
+            let username = event.target.username.value
+            fetch(`http://localhost:3000/users/login`, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                    },
+                body: JSON.stringify({
+                    usernameFromFrontEnd: username
+                })
+            })
+            .then(res => res.json())
+            .then((user) => {
+                if(user.id){
+                    loginLink.innerText = "Log Out"
+                    loginLink.hidden = false
+                    loginFormDiv.innerHTML = ""
 
-    loginForm.addEventListener("submit", (event) => {
-        event.preventDefault()
-        let username = event.target.username.value
-        fetch(`http://localhost:3000/users/login`, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json"
-                },
-            body: JSON.stringify({
-                usernameFromFrontEnd: username
+                    loginFormDiv.innerText = `Welcome ${user.username}`
+     
+                    currentUser.push(user)
+                
+                } else {
+                    console.log("this is line 48", user)
+                }
             })
         })
-        .then(res => res.json())
-        .then((user) => {
-            if(user.id){
-
-                loginFormDiv.innerHTML = ""
-
-                let userInfo = document.createElement("p")
-                    userInfo.hidden = true
-                    userInfo.id = user.id
-                    loginFormDiv.append(userInfo)
-                    loginFormDiv.innerText = `Welcome ${user.username}`
-                // create new order
-                // when user click "add to cart", item should get added to the new order in the backend
-                // added item should get displayed on the sidebar in the frontend
-                 newOrder(user)
-                 currentUser.push(user)
-               
-            } else {
-                console.log("this is line 48", user)
-            }
-        })
-    })
-
+    }else{
+        loginLink.innerText = "Log In"
+        currentUser.pop()
+    }
 })
 
 
