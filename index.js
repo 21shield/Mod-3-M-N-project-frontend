@@ -236,7 +236,6 @@ let homeButt = document.querySelector("#homeBtn")
 function checkout (event){
     homePage.innerHTML = ""
     checkoutPage.hidden = false
-    // cartTotal.innerHTML = ""
     
     console.log(currentUser[0].orders[0].items);
     let priceArray = []
@@ -268,15 +267,11 @@ function checkout (event){
             cartDiv.append(orderItemDiv)
 
             showItemListTotal(item)
-            
-
             removeItem.addEventListener("click",(evt) => {
                 removeItemFromOrder(item)
             })
         })
-
-        showOrderTotal(priceArray)
-        
+        showOrderTotal(priceArray)   
     }else{
         console.log("you need to sign in ");
     }
