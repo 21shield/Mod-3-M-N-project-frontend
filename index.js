@@ -13,6 +13,9 @@ let cartDiv = document.querySelector("#cart-items")
 let cartBtn = document.querySelector("#cartBtn")
 let checkoutBtn = document.querySelector("#checkout")
 
+let cartTotal = document.querySelector("#items-total")
+let totalPrice = document.querySelector("#total")
+
 let currentUser = []
 
 loginLink.addEventListener("click", (event) => {
@@ -156,8 +159,6 @@ let showItemOnSideBar = (item, id) => {
     removeItem.addEventListener("click", (evt) => {
         orderItem.innerText = ""
         let itemId = removeItem.id
-        debugger
-        console.log(itemId);
         fetch(`http://localhost:3000/order_items/${id}`, {
             method: "DELETE"
         })
@@ -170,7 +171,7 @@ let showItemOnSideBar = (item, id) => {
     
 function addToOrder(item){
     let currentOrder = currentUser[0].orders[0]
-    //  currentUser[0].orders[0].items.push(item)
+     currentUser[0].orders[0].items.push(item)
     
    
     fetch(`http://localhost:3000/order_items`, {
@@ -187,23 +188,38 @@ function addToOrder(item){
         .then((newOrderItem) => {
             
             let orderItemId = newOrderItem.id
-            
+            currentUser[0].orders[0].order_items.push(newOrderItem)
+           
             // currentUser[0].orders[0].items.push(response)
             showItemOnSideBar(item, orderItemId)
+            
+            // currentUser[0].orders[0].items.push(newOrderItem)
         })
 
 }
+let homeButt = document.querySelector("#homeBtn")
 
-cartBtn.addEventListener("click", (evt) => checkout(event))
-checkoutBtn.addEventListener("click", (evt) => checkout(event))
+    cartBtn.addEventListener("click", (evt) => checkout(event))
+    checkoutBtn.addEventListener("click", (evt) => checkout(event))
+    homeButt.addEventListener("click", (evt) => {
+        homePage.hidden = false
+        checkoutPage.hidden = true
+
+})
 
 function checkout (event){
+    debugger
+    checkoutPage.hidden = false
     let currentUserOrder = currentUser[0].orders[0]
+    let priceArray = []
     if(currentUser.length === 1){
-       homePage.innerHTML = ""
+        
+       homePage.hidden = true
         // access the order
+        cartDiv.innerHTML = ""
         currentUserOrder.items.forEach((item) => {
-            // create a div inside 
+            
+            priceArray.push(item.price)
             let orderItemDiv = document.createElement("div")
             let itemImg = document.createElement("img")
                 itemImg.src = item.image
@@ -220,15 +236,45 @@ function checkout (event){
             orderItemDiv.append(itemImg, itemName, itemDescription, itemPrice, itemCategory,removeItem)
             cartDiv.append(orderItemDiv)
 
+            showItemListTotal(item)
+            
+
             removeItem.addEventListener("click",(evt) => {
                 removeItemFromOrder(item)
             })
         })
 
+        showOrderTotal(priceArray)
 
     }else{
         console.log("you need to sign in ");
     }
+}
+
+
+
+let showItemListTotal = (itemObj) => {
+
+    let checkoutItem = document.createElement("div")
+        let itemName = document.createElement("h4")
+            itemName.innerText = itemObj.name
+        let itemPrice = document.createElement("span")
+        itemPrice.innerText = `$ ${itemObj.price}`
+        itemName.append(itemPrice)
+        checkoutItem.append(itemName)
+        cartTotal.append(checkoutItem)
+
+        
+}
+
+
+let showOrderTotal = (array) => {
+
+    let total = array.reduce((num1, num2) => num1 + num2)
+    let totalH1 = document.createElement("h1")
+    totalH1.innerText = total
+    totalPrice.append(totalH1)
+
 }
 
 
@@ -253,3 +299,4 @@ let removeItemFromOrder = (itemObj) => {
     // })
       
 }
+

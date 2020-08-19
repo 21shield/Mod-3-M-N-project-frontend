@@ -13,7 +13,7 @@
     <div id = "navigation-bar">
             <!-- show welcome message and cart here -->
             <nav id= "navBar">
-                <a href="/orders">Home</a>
+                <a id="homeBtn">Home</a>
                  <!--home button shows main page  -->
                 <button id="cartBtn">Cart</button> 
                 <button id= "login">Login</button>   
@@ -35,15 +35,14 @@
 
     <div id= "checkout-page" class= "checkout">
         <div id="items-total">
-            <div id="cart-items">
-                <!-- display items/prices each in a div-->
-                <!-- quanity -->
-            </div>
+            <!-- a div for name of item/ price -->
             <div id="total">
                 <!-- displays total -->
             </div>
             <div id= "place-order">
                 <!-- has a button that deletes order  -->
+                <button class="place-order">Place Order</button>
+                <!-- shows on page Your Order has been Placed -->
             </div>
         </div>
 
@@ -51,6 +50,10 @@
             <!-- display all the items in curren order -->
             <!-- each item will be in a div with its information-->
             <!-- each div belong to item will have 3 buttons add/delete/ "-" -->
+            <div id="cart-items">
+                <!-- display items/prices each in a div-->
+                <!-- quanity -->
+            </div>
         </div>
     </div>
     <!-- bootstrap stuff -->
