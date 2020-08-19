@@ -7,7 +7,6 @@ let loginLink = document.querySelector("#login")
 let loginFormDiv = document.querySelector("#loginform")
 
 let checkoutPage = document.querySelector("#checkout-page")
-let totalDiv = document.querySelector("#items-total")
 let cartDiv = document.querySelector("#cart-items")
 
 let cartBtn = document.querySelector("#cartBtn")
@@ -183,9 +182,12 @@ let showItemOnSideBar = (item, id) => {
         })
         .then(resp => resp.json())
         .then(emptyObj => {
-            console.log("officially removed")
+            
             // update obj in memory 
             // remove the item from the obj array in memory
+            let index = currentUser[0].orders[0].order_items.findIndex((item) => item.id === item.id)
+            currentUser[0].orders[0].items.splice(index,1)
+            
             debugger
         })
     })
@@ -210,7 +212,7 @@ function addToOrder(item){
         .then((newOrderItem) => {
             
             let orderItemId = newOrderItem.id
-            currentUser[0].orders[0].order_items.push(newOrderItem)
+            // currentUser[0].orders[0].order_items.push(newOrderItem)
            
             // currentUser[0].orders[0].items.push(response)
             showItemOnSideBar(item, orderItemId)
@@ -234,6 +236,8 @@ let homeButt = document.querySelector("#homeBtn")
 function checkout (event){
     homePage.innerHTML = ""
     checkoutPage.hidden = false
+    // cartTotal.innerHTML = ""
+    
     console.log(currentUser[0].orders[0].items);
     let priceArray = []
     
@@ -272,7 +276,7 @@ function checkout (event){
         })
 
         showOrderTotal(priceArray)
-
+        
     }else{
         console.log("you need to sign in ");
     }
@@ -296,7 +300,7 @@ let showItemListTotal = (itemObj) => {
 
 
 let showOrderTotal = (array) => {
-
+    
     let total = array.reduce((num1, num2) => num1 + num2)
     let totalH1 = document.createElement("h1")
     totalH1.innerText = total
@@ -320,25 +324,6 @@ placeOrder.addEventListener("click", (evt) => {
     })
 })
 
-// let removeItemFromOrder = (itemObj) => {
-//     let order = currentUser[0].orders[0]
-//     let oI = order.order_items 
 
-//     
-//     // match to orderid and item id
-//     // find in our array
-
-//     // fetch(`http://localhost:3000/order_items`, {
-//     //     method: "POST",
-//     //     headers: {
-//     //         "Content-Type" : "application/json"
-//     //     },
-//     //     body: JSON.stringify({
-//     //         order_id: currentOrder.id,
-//     //         item_id: item.id
-//     //     })
-//     // })
-      
-// }
 
 
