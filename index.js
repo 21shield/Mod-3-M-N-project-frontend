@@ -1,7 +1,7 @@
 
 // import 'bootstrap';
 let homePage = document.querySelector("#main-page")
-let itemMainDiv = document.querySelector("#items")
+let itemMainDiv = document.querySelector("div#items")
 let orderSideBar = document.querySelector("#order-sidebar")
 let loginLink = document.querySelector("#login")
 let loginFormDiv = document.querySelector("#loginform")
@@ -27,13 +27,14 @@ loginLink.addEventListener("click", (event) => {
     loginFormDiv.innerHTML = ""
     if(loginLink.innerText === "Log In"){
         loginLink.hidden = true
+        
         let loginForm = document.createElement("form")
         let usernameInput = document.createElement("input")
             usernameInput.id = "username"
         let loginButton = document.createElement("button")
             loginButton.classList.add("btn")
             loginButton.classList.add("btn-outline-warning")
-            loginButton.innerText = "Login"
+            loginButton.innerText = "Log In"
             loginForm.append(usernameInput, loginButton)
             loginFormDiv.append(loginForm)
 
@@ -57,9 +58,9 @@ loginLink.addEventListener("click", (event) => {
                     loginFormDiv.innerHTML = ""
                     newOrder(user)
                     loginFormDiv.innerText = `Welcome ${user.username}`
-     
+                    checkoutBtn.hidden = false
                     currentUser.push(user)
-                
+                    
                 } else {
                     console.log("this is line 48", user)
                 }
@@ -76,7 +77,6 @@ let newOrder = (user) => {
     if (user.orders.length < 1){
         let orderNumber = Date.now()
        
-        // debugger
         fetch(`http://localhost:3000/orders`, {
             method: "POST", 
             headers: {
@@ -116,6 +116,7 @@ function mainDisplay () {
 
 
 let turnItemIntoHTML = (item) => {
+
     let itemDiv = document.createElement("div")
         itemDiv.classList.add("card");
 
@@ -132,9 +133,7 @@ let turnItemIntoHTML = (item) => {
         itemPrice.innerHTML = `$ ${item.price}`
 
         let addButon = document.createElement("button")
-            addButon.classList.add('btn');
-            addButon.classList.add('btn-outline-warning');
-            addButon.classList.add('btn-sm');
+            addButon.classList.add('btn','btn-outline-warning','btn-sm');                
             addButon.innerText = "Add to cart"
 
     itemBody.append( itemName, itemPrice, addButon)
@@ -185,13 +184,16 @@ let showItemOnSideBar = (item, id) => {
         .then(resp => resp.json())
         .then(emptyObj => {
             console.log("officially removed")
+            // update obj in memory 
+            // remove the item from the obj array in memory
+            debugger
         })
     })
 }
     
 function addToOrder(item){
     let currentOrder = currentUser[0].orders[0]
-     currentUser[0].orders[0].items.push(item)
+      currentUser[0].orders[0].items.push(item)
     
    
     fetch(`http://localhost:3000/order_items`, {
@@ -225,23 +227,26 @@ let homeButt = document.querySelector("#homeBtn")
     homeButt.addEventListener("click", (evt) => {
         console.log("IVE BEEN CLICKED")
         mainDisplay()
-        // checkoutPage.hidden = true
-        // itemMainDiv.hidden = tru
+        checkoutPage.hidden = true
+        itemMainDiv.hidden = tru
 })
 
 function checkout (event){
-    
+    homePage.innerHTML = ""
     checkoutPage.hidden = false
-    let currentUserOrder = currentUser[0].orders[0]
+    console.log(currentUser[0].orders[0].items);
     let priceArray = []
+    
     if(currentUser.length === 1){
         
-       homePage.hidden = true
+        homePage.hidden = true
         // access the order
         cartDiv.innerHTML = ""
-        currentUserOrder.items.forEach((item) => {
+
+        currentUser[0].orders[0].items.forEach((item) => {
             
             priceArray.push(item.price)
+           
             let orderItemDiv = document.createElement("div")
             let itemImg = document.createElement("img")
                 itemImg.src = item.image
