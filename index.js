@@ -115,20 +115,28 @@ function mainDisplay () {
 
 let turnItemIntoHTML = (item) => {
     let itemDiv = document.createElement("div")
+        itemDiv.classList.add("card");
 
-    let itemName = document.createElement("h1")
-    itemName.innerHTML = item.name
-    
     let itemImage = document.createElement("img")
-    itemImage.src = item.image
+        itemImage.src = item.image
+        itemImage.classList.add('card-img-top');
+    let itemBody = document.createElement("div")
+        itemBody.classList.add('card-body');
 
-    let itemPrice = document.createElement("p")
-    itemPrice.innerHTML = `$ ${item.price}`
+        let itemName = document.createElement("h5")
+            itemName.classList.add('card-title');
+            itemName.innerHTML = item.name
+        let itemPrice = document.createElement("p")
+        itemPrice.innerHTML = `$ ${item.price}`
 
-    let addButon = document.createElement("button")
-    addButon.innerText = "Add to cart"
+        let addButon = document.createElement("button")
+            addButon.classList.add('btn');
+            addButon.classList.add('btn-outline-warning');
+            addButon.classList.add('btn-sm');
+            addButon.innerText = "Add to cart"
 
-    itemDiv.append(itemImage, itemName, itemPrice, addButon)
+    itemBody.append( itemName, itemPrice, addButon)
+    itemDiv.append(itemImage,itemBody)
     itemMainDiv.append(itemDiv)
 
 
@@ -220,7 +228,7 @@ let homeButt = document.querySelector("#homeBtn")
 })
 
 function checkout (event){
-    debugger
+    
     checkoutPage.hidden = false
     let currentUserOrder = currentUser[0].orders[0]
     let priceArray = []
@@ -309,7 +317,7 @@ placeOrder.addEventListener("click", (evt) => {
 //     let order = currentUser[0].orders[0]
 //     let oI = order.order_items 
 
-//     debugger
+//     
 //     // match to orderid and item id
 //     // find in our array
 

@@ -5,32 +5,40 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script defer src="index.js"></script>
-    <title>Document</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
+    <title>Sundar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
 </head>
 <body>
 
     <div id = "navigation-bar">
             <!-- show welcome message and cart here -->
-            <nav id= "navBar">
-                <button id="homeBtn">Home</button>
+            
+            <nav class="nav justify-content-end" id= "navBar">
+                <button class="btn btn-outline-warning" id="homeBtn">Home</button>
                  <!--home button shows main page  -->
-                <button id="cartBtn">Cart</button> 
-                <button id= "login">Log In</button>   
+                <button class="btn btn-outline-warning"  id="cartBtn">Cart</button> 
+                <button class="btn btn-outline-warning"  id= "login">Log In</button>   
                 <div id="loginform"></div>
             </nav>
         </div>
 
-    <div id= "main-page">
-        <div id= "items">
-            <!-- show items here -->
+    <div id= "main-page" class="container">
+
+        <div class="">
+            <div id= "items" class="d-flex flex-wrap">
+                <!-- show items here -->
+            </div>
         </div>
-        <div id="order-sidebar">
+
+        <div id="order-sidebar" class="col">
             <!-- show order-items here -->
             <div>
                 <button id="checkout"> Checkout </button>
             </div>
         </div>
+
     </div>
 
     <div id= "checkout-page" class= "checkout">

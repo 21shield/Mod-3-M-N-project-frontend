@@ -1,9 +1,4 @@
-.checkout{
-    border: 2px;
-    
-}
-
-#navbar {
-    
-    color: blue;
+.card {
+    width: 19% !important;
+    margin: 5px
 }
