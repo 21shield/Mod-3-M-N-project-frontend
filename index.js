@@ -16,7 +16,11 @@ let checkoutBtn = document.querySelector("#checkout")
 let cartTotal = document.querySelector("#items-total")
 let totalPrice = document.querySelector("#total")
 
+let placeOrder = document.querySelector(".place-order")
+
 let currentUser = []
+
+mainDisplay()
 
 loginLink.addEventListener("click", (event) => {
     
@@ -49,7 +53,7 @@ loginLink.addEventListener("click", (event) => {
                     loginLink.innerText = "Log Out"
                     loginLink.hidden = false
                     loginFormDiv.innerHTML = ""
-
+                    newOrder(user)
                     loginFormDiv.innerText = `Welcome ${user.username}`
      
                     currentUser.push(user)
@@ -93,13 +97,21 @@ let newOrder = (user) => {
     }
 }
 
-fetch(`http://localhost:3000/items`)
-.then(r => r.json())
-.then((items) => {
-    items.forEach((item) => {
-        turnItemIntoHTML(item)
+
+
+
+function mainDisplay () {
+  
+    fetch(`http://localhost:3000/items`)
+    .then(r => r.json())
+    .then((items) => {
+        items.forEach((item) => {
+            turnItemIntoHTML(item)
+        })
     })
-})
+}
+
+
 
 let turnItemIntoHTML = (item) => {
     let itemDiv = document.createElement("div")
@@ -199,10 +211,12 @@ let homeButt = document.querySelector("#homeBtn")
 
     cartBtn.addEventListener("click", (evt) => checkout(event))
     checkoutBtn.addEventListener("click", (evt) => checkout(event))
-    homeButt.addEventListener("click", (evt) => {
-        homePage.hidden = false
-        checkoutPage.hidden = true
 
+    homeButt.addEventListener("click", (evt) => {
+        console.log("IVE BEEN CLICKED")
+        mainDisplay()
+        // checkoutPage.hidden = true
+        // itemMainDiv.hidden = tru
 })
 
 function checkout (event){
@@ -275,26 +289,41 @@ let showOrderTotal = (array) => {
 
 }
 
+placeOrder.addEventListener("click", (evt) => {
+    
+    let id = currentUser[0].orders[0].id
+    fetch(`http://localhost:3000/orders/${id}`, {
+        method: 'DELETE'
+    })
+    .then(resp => resp.json())
+    .then(obj =>{
+        checkoutPage.innerHTML = ""
+        orderSideBar.innerHTML = ""
+        currentUser[0].orders.pop()
+        newOrder(currentUser[0])
+        alert("order has been  placed")
+    })
+})
 
+// let removeItemFromOrder = (itemObj) => {
+//     let order = currentUser[0].orders[0]
+//     let oI = order.order_items 
 
-let removeItemFromOrder = (itemObj) => {
-    let order = currentUser[0].orders[0]
-    let oI = order.order_items 
+//     debugger
+//     // match to orderid and item id
+//     // find in our array
 
-    debugger
-    // match to orderid and item id
-    // find in our array
-
-    // fetch(`http://localhost:3000/order_items`, {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type" : "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //         order_id: currentOrder.id,
-    //         item_id: item.id
-    //     })
-    // })
+//     // fetch(`http://localhost:3000/order_items`, {
+//     //     method: "POST",
+//     //     headers: {
+//     //         "Content-Type" : "application/json"
+//     //     },
+//     //     body: JSON.stringify({
+//     //         order_id: currentOrder.id,
+//     //         item_id: item.id
+//     //     })
+//     // })
       
-}
+// }
+
 
