@@ -31,6 +31,8 @@ loginLink.addEventListener("click", (event) => {
         let usernameInput = document.createElement("input")
             usernameInput.id = "username"
         let loginButton = document.createElement("button")
+            loginButton.classList.add("btn")
+            loginButton.classList.add("btn-outline-warning")
             loginButton.innerText = "Login"
             loginForm.append(usernameInput, loginButton)
             loginFormDiv.append(loginForm)
