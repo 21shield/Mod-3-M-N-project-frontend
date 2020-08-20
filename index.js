@@ -165,7 +165,7 @@ let turnItemIntoHTML = (item) => {
         
        
         
-
+// >>>>>>>>>>>>>>>>>shows the reviews<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
         let reviewDiv = document.createElement("div")
         // reviewDiv.classList.add('modal');
@@ -185,7 +185,7 @@ let turnItemIntoHTML = (item) => {
             let newRevForm = document.createElement("form")
                 newRevForm.innerHTML =`<div class="form-group">
                 <textarea class="form-control" id="review-content" rows="3"></textarea>  
-                <input type="submit"class="btn btn-primary"></input>
+                <input type="submit"class="btn btn-primary" id="submitBtn"></input>
                 <input type="hidden" id="item-id" value=${item.id} ></input>
                 </div>`
             newReviewDiv.append(newRevForm); 
@@ -193,7 +193,32 @@ let turnItemIntoHTML = (item) => {
     
             itemMainDiv.append(itemDiv, reviewDiv)         
 
+            
+// >>>>>>>>>>>>>>>>>>>review submit event thing<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    let sbmtBtn = document.querySelector("#submitBtn")
 
+    sbmtBtn.addEventListener('submit', (evt) => {
+        evt.preventDefault()
+        debugger
+        fetch(`http://localhost:3000/reviews`, {
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringfy({
+                content: evt.target["review-content"].value,
+                user_id: currentUser[0].id,
+                item_id: evt.target["item-id"].value
+            })
+        })
+        .then(resp => resp.json())
+        .then(newReview => {
+            item.reviews.push(newReview)
+            
+        })
+    });
+    
+debugger
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>end<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     })
 
     addButon.addEventListener("click", (event) => {
