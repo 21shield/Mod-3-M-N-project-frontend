@@ -183,27 +183,38 @@ let turnItemIntoHTML = (item) => {
         let newReviewDiv = document.createElement("div")
             // newReviewDiv.classList.add('modal-content');
             let newRevForm = document.createElement("form")
-                newRevForm.innerHTML =`<div class="form-group">
-                <textarea class="form-control" id="review-content" rows="3"></textarea>  
-                <input type="submit"class="btn btn-primary" id="submitBtn"></input>
-                <input type="hidden" id="item-id" value=${item.id} ></input>
-                </div>`
+            let revFormDiv = document.createElement("div")
+            revFormDiv.classList.add("form-group")
+            let revTextArea = document.createElement("textarea")
+            revTextArea.classList.add("form-control")
+            revTextArea.id = "review-content"
+            revTextArea.rows = "2"
+            let submitButton = document.createElement("button")
+            submitButton.classList.add("btn", "btn-primary")
+            submitButton.id = "submitBtn"
+            submitButton.type = "submit"
+            submitButton.innerText = "Submit Review"
+            let itemIdInput = document.createElement("input")
+            itemIdInput.type = "hidden"
+            itemIdInput.id = "item-id"
+            itemIdInput.value = item.id
+            revFormDiv.append(revTextArea, itemIdInput, submitButton)
+            newRevForm.append(revFormDiv)
             newReviewDiv.append(newRevForm); 
             reviewDiv.append(itemReviews, newReviewDiv); 
-    
             itemMainDiv.append(itemDiv, reviewDiv)         
 
             
 // >>>>>>>>>>>>>>>>>>>review submit event thing<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    let sbmtBtn = document.querySelector("#submitBtn")
+    
 
-    sbmtBtn.addEventListener('submit', (evt) => {
+    newRevForm.addEventListener('submit', (evt) => {
         evt.preventDefault()
         debugger
         fetch(`http://localhost:3000/reviews`, {
             method: "POST",
             headers: {"Content-type": "application/json"},
-            body: JSON.stringfy({
+            body: JSON.stringify({
                 content: evt.target["review-content"].value,
                 user_id: currentUser[0].id,
                 item_id: evt.target["item-id"].value
@@ -215,9 +226,6 @@ let turnItemIntoHTML = (item) => {
             
         })
     });
-    
-debugger
-
 // >>>>>>>>>>>>>>>>>>>>>>>>>end<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     })
 
