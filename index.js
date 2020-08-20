@@ -22,6 +22,7 @@ let placeOrder = document.querySelector(".place-order")
 let reviewContainerDiv = document.querySelector('#itemReview');
 
 let currentUser = []
+let badge = document.querySelector(".uk-badge")
 
 mainDisplay()
 
@@ -30,6 +31,7 @@ loginLink.addEventListener("click", (event) => {
     loginFormDiv.innerHTML = ""
     if(loginLink.innerText === "Log In"){
         loginLink.hidden = true
+        
         
         let loginForm = document.createElement("form")
         let usernameInput = document.createElement("input")
@@ -56,6 +58,8 @@ loginLink.addEventListener("click", (event) => {
             .then(res => res.json())
             .then((user) => {
                 if(user.id){
+                    
+                    
                     loginLink.innerText = "Log Out"
                     loginLink.hidden = false
                     loginFormDiv.innerHTML = ""
@@ -63,6 +67,7 @@ loginLink.addEventListener("click", (event) => {
                     loginFormDiv.innerText = `Welcome ${user.username}`
                     checkoutBtn.hidden = false
                     currentUser.push(user)
+                    debugger
                     
                 } else {
                     console.log("this is line 48", user)
@@ -232,6 +237,7 @@ let turnItemIntoHTML = (item) => {
     addButon.addEventListener("click", (event) => {
         
         addToOrder(item)
+        
     })
 
    
@@ -281,9 +287,6 @@ let turnItemIntoHTML = (item) => {
 // review modal ends
 
 
-
-
-
 let showItemOnSideBar = (item, id) => {
     // add item to users order
     let orderItem = document.createElement("div")
@@ -308,7 +311,7 @@ let showItemOnSideBar = (item, id) => {
             let index = currentUser[0].orders[0].order_items.findIndex((item) => item.id === item.id)
             currentUser[0].orders[0].items.splice(index,1)
             
-            debugger
+          
         })
     })
 }
@@ -316,7 +319,6 @@ let showItemOnSideBar = (item, id) => {
 function addToOrder(item){
     let currentOrder = currentUser[0].orders[0]
       currentUser[0].orders[0].items.push(item)
-    
    
     fetch(`http://localhost:3000/order_items`, {
         method: "POST",

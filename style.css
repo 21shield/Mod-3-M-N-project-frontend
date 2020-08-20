@@ -1,37 +1,49 @@
 .card {
-    width: 19% !important;
+    width: 20% !important;
     margin: 5px
 }
 
 .navbar {
-    position: relative;
+    /* position: relative; */
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding: 1.5rem 1rem;
+    background: #1d2122;
+    opacity: 87% !important;
 }
 
-.navbar-light .navbar-brand {
-    color: rgb(243, 155, 155);
+ .navbar-brand {
+    color: #d92027 !important;
+    
+}
+
+#flowerIcon {
+    color: #d92027!important;
 }
 
 .navbar-brand {
     font-family: cursive; 
-    font-size: 2.75rem;  
-}
-
-.navbar-brand {
-    font-weight: 700;
-}
-
-.navbar-brand {
+    font-size: 2rem !important;
+    font-weight: 700; 
     display: inline-block;
     margin-right: 1rem; 
     
     line-height: inherit;
-    white-space: nowrap;
+    white-space: nowrap; 
 }
+
+#navButtons > button:hover {
+    border:#98f8ff solid 2px;
+    color: #98f8ff;
+    /* background: #d92027; */
+}
+
+#navButtons > button {
+    color: #d92027 !important;
+}
+
 
 
 
