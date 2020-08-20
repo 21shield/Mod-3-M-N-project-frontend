@@ -1,5 +1,7 @@
 
 // import 'bootstrap';
+
+
 let homePage = document.querySelector("#main-page")
 let itemMainDiv = document.querySelector("div#items")
 let orderSideBar = document.querySelector("#order-sidebar")
@@ -16,6 +18,8 @@ let cartTotal = document.querySelector("#items-total")
 let totalPrice = document.querySelector("#total")
 
 let placeOrder = document.querySelector(".place-order")
+
+let reviewContainerDiv = document.querySelector('#itemReview');
 
 let currentUser = []
 
@@ -133,12 +137,20 @@ let turnItemIntoHTML = (item) => {
 
         let addButon = document.createElement("button")
             addButon.classList.add('btn','btn-outline-warning','btn-sm');                
-            addButon.innerText = "Add to cart"
+            addButon.innerHTML = `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="even odd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+            <path fill-rule="even odd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+          </svg>`
+        let leaveReview = document.createElement("button")
+            leaveReview.classList.add('btn','btn-outline-warning','btn-sm','modal-btn'); 
+            leaveReview.innerText = "Review"
 
-    itemBody.append( itemName, itemPrice, addButon)
+    itemBody.append( itemName, itemPrice, addButon, leaveReview)
     itemDiv.append(itemImage,itemBody)
     itemMainDiv.append(itemDiv)
 
+  
+   
 
     itemImage.addEventListener("click", (event) => {
         itemMainDiv.innerHTML = ""
@@ -151,7 +163,36 @@ let turnItemIntoHTML = (item) => {
 
         itemDiv.append(itemImage, itemName, itemPrice, itemDescription, itemCategory, addButon)
         
-        itemMainDiv.append(itemDiv)
+       
+        
+
+
+        let reviewDiv = document.createElement("div")
+        // reviewDiv.classList.add('modal');
+        let itemReviews = document.createElement("div")
+            // itemReviews.classList.add('modal-content');
+            let reviewUl = document.createElement("ul")
+                // reviewUl.classList.add('list-group', 'list-group-flush')
+                item.reviews.forEach(rev =>{
+                    let revLi = document.createElement("li")
+                        // revLi.classList.add('list-group-item')
+                        revLi.innerText = rev.content
+                        reviewUl.append(revLi)
+                })
+            itemReviews.append(reviewUl)
+        let newReviewDiv = document.createElement("div")
+            // newReviewDiv.classList.add('modal-content');
+            let newRevForm = document.createElement("form")
+                newRevForm.innerHTML =`<div class="form-group">
+                <textarea class="form-control" id="review-content" rows="3"></textarea>  
+                <input type="submit"class="btn btn-primary"></input>
+                <input type="hidden" id="item-id" value=${item.id} ></input>
+                </div>`
+            newReviewDiv.append(newRevForm); 
+            reviewDiv.append(itemReviews, newReviewDiv); 
+    
+            itemMainDiv.append(itemDiv, reviewDiv)         
+
 
     })
 
@@ -159,10 +200,56 @@ let turnItemIntoHTML = (item) => {
         
         addToOrder(item)
     })
+
+   
         // create a new order item form with the userId and the item clicked by user
         // 
-
+        // leaveReview.onclick = function (evt) {
+        //     // reviewContainerDiv.style.display = "block";
+        //     reviewItem(item)
+        // }
 }
+
+// review modals
+
+// function reviewItem(item){
+//     // get the items reviews
+//     // display them
+//     // have a form that lets you add a review => userid\
+    
+//     let reviewDiv = document.createElement("div")
+//         reviewDiv.classList.add('modal');
+//         let itemReviews = document.createElement("div")
+//             // itemReviews.classList.add('modal-content');
+//             let reviewUl = document.createElement("ul")
+//                 // reviewUl.classList.add('list-group', 'list-group-flush')
+//                 item.reviews.forEach(rev =>{
+//                     let revLi = document.createElement("li")
+//                         // revLi.classList.add('list-group-item')
+//                         revLi.innerText = rev.content
+//                         reviewUl.append(revLi)
+//                 })
+//             itemReviews.append(reviewUl)
+//         let newReviewDiv = document.createElement("div")
+//             // newReviewDiv.classList.add('modal-content');
+//             let newRevForm = document.createElement("form")
+//                 newRevForm.innerHTML =`<div class="form-group">
+//                 <textarea class="form-control" id="review-content" rows="3"></textarea>  
+//                 <input type="submit"class="btn btn-primary"></input>
+//                 <input hidden id="item-id" value=${item.id} ><input>
+//                 </div>`
+//             newReviewDiv.append(newRevForm); 
+//     reviewDiv.append(itemReviews, newReviewDiv); 
+    
+//     reviewContainerDiv.append(reviewDiv);
+    
+// }
+
+// review modal ends
+
+
+
+
 
 let showItemOnSideBar = (item, id) => {
     // add item to users order

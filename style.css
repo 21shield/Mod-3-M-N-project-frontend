@@ -2,3 +2,38 @@
     width: 19% !important;
     margin: 5px
 }
+
+.navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 1rem;
+}
+
+.navbar-light .navbar-brand {
+    color: rgb(243, 155, 155);
+}
+
+.navbar-brand {
+    font-family: cursive; 
+    font-size: 2.75rem;  
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.navbar-brand {
+    display: inline-block;
+    margin-right: 1rem; 
+    
+    line-height: inherit;
+    white-space: nowrap;
+}
+
+
+
+/* modal */
+
