@@ -301,13 +301,8 @@ let showItemOnSideBar = (item, id) => {
         })
         .then(resp => resp.json())
         .then(emptyObj => {
-            
-            // update obj in memory 
-            // remove the item from the obj array in memory
             let index = currentUser[0].orders[0].order_items.findIndex((item) => item.id === item.id)
-            currentUser[0].orders[0].items.splice(index,1)
-            
-          
+            currentUser[0].orders[0].items.splice(index,1)       
         })
     })
 }
