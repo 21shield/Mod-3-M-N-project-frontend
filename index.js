@@ -28,6 +28,8 @@ let placeOrder = document.querySelector(".place-order")
 let reviewContainerDiv = document.querySelector('#itemReview');
 
 let currentUser = []
+let userId
+let orderId
 let badge = document.querySelector(".uk-badge")
 
 mainDisplay()
@@ -37,8 +39,7 @@ loginLink.addEventListener("click", (event) => {
     loginFormDiv.innerHTML = ""
     if(loginLink.innerText === "Log In"){
         loginLink.hidden = true
-        
-        
+   
         let loginForm = document.createElement("form")
         let usernameInput = document.createElement("input")
             usernameInput.id = "username"
@@ -64,12 +65,14 @@ loginLink.addEventListener("click", (event) => {
             .then(res => res.json())
             .then((user) => {
                 if(user.id){
-
                     loginLink.innerText = "Log Out"
                     loginLink.hidden = false
                     loginFormDiv.innerHTML = ""
-                    newOrder(user)
                     loginFormDiv.innerText = `Welcome ${user.username}`
+                    // newOrder(user)
+                    userId = user.id
+                    orderId = user.orders[0].id
+                    getOrderItems()
                     checkoutBtn.hidden = false
                     currentUser.push(user)
                     
@@ -102,18 +105,34 @@ let newOrder = (user) => {
         })
         .then((rsp) => rsp.json())
         .then(newOrder => {
-            
-            user.orders.push(newOrder)
-            user.orders[0].items.forEach(item => showItemOnSideBar(item))
+            orderId = newOrder.id
+            // user.orders.push(newOrder)
+            // user.orders[0].items.forEach(item => showItemOnSideBar(item))
         })
     }else {
-        // users order for each item we do show item
-       user.orders[0].items.forEach(item => showItemOnSideBar(item))
+        let currentOrder = user.orders[0]
+        orderId = user.orders[0].id
+        let items = []
+        let orderItems = []
+        
+        debugger
+        currentOrder.items.forEach(item => items.push(item))
+        currentOrder.order_items.forEach(orderItem => orderItems.push(orderItem))
+
+        // showItemOnSideBar()
     }
 }
 
-
-
+function getOrderItems() {
+    fetch(`http://localhost:3000/orders/${orderId}`)
+    .then(resp => resp.json())
+    .then(order => {
+        let orderItems = order.order_items
+        orderItems.forEach(orderItem => {
+            showItemOnSideBar(orderItem.item, orderItem.id)
+        });
+    })
+}
 
 function mainDisplay () {
   
@@ -214,32 +233,9 @@ let turnItemIntoHTML = (item) => {
             reviewDiv.append(itemReviews, newReviewDiv); 
             itemMainDiv.append(itemDiv, reviewDiv)         
 
-            
-// >>>>>>>>>>>>>>>>>>>review submit event thing<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    
-
-    // newRevForm.addEventListener('submit', (evt) => {
-    //     evt.preventDefault()
-    //     debugger
-    //     fetch(`http://localhost:3000/reviews`, {
-    //         method: "POST",
-    //         headers: {"Content-type": "application/json"},
-    //         body: JSON.stringify({
-    //             content: evt.target["create-review"].value,
-    //             user_id: currentUser[0].id,
-    //             item_id: evt.target["item-id"].value
-    //         })
-    //     })
-    //     .then(resp => resp.json())
-    //     .then(newReview => {
-    //         item.reviews.push(newReview)
-            
-    //     })
-    // });
-// >>>>>>>>>>>>>>>>>>>>>>>>>end<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 })
 
-    addButon.addEventListener("click", (event) => {
+addButon.addEventListener("click", (event) => {
     addToOrder(item)})
 }
 
