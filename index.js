@@ -1,6 +1,12 @@
 
 // import 'bootstrap';
+// >>>>>>>>>>>>>
 
+let formFromModal = document.querySelector(".new-review-form-modal")
+let hiddenFormInput = document.querySelector("#item-id")
+let reviewsUl = document.querySelector("#reviews-list")
+
+// >>>>>>>>>>>>>>>
 
 let homePage = document.querySelector("#main-page")
 let itemMainDiv = document.querySelector("div#items")
@@ -58,8 +64,7 @@ loginLink.addEventListener("click", (event) => {
             .then(res => res.json())
             .then((user) => {
                 if(user.id){
-                    
-                    
+
                     loginLink.innerText = "Log Out"
                     loginLink.hidden = false
                     loginFormDiv.innerHTML = ""
@@ -67,7 +72,6 @@ loginLink.addEventListener("click", (event) => {
                     loginFormDiv.innerText = `Welcome ${user.username}`
                     checkoutBtn.hidden = false
                     currentUser.push(user)
-                    debugger
                     
                 } else {
                     console.log("this is line 48", user)
@@ -76,6 +80,7 @@ loginLink.addEventListener("click", (event) => {
         })
     }else{
         loginLink.innerText = "Log In"
+
         currentUser.pop()
     }
 })
@@ -146,16 +151,16 @@ let turnItemIntoHTML = (item) => {
             <path fill-rule="even odd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
             <path fill-rule="even odd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
           </svg>`
-        let leaveReview = document.createElement("button")
-            leaveReview.classList.add('btn','btn-outline-warning','btn-sm','modal-btn'); 
-            leaveReview.innerText = "Review"
+        let leaveReview = document.createElement("div")
+            leaveReview.classList.add('review-modal-button');
+        leaveReview.innerHTML = `<button type="button" data-item-id="${item.id}" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"> Review Item </button>`
+        let reviewBtn = leaveReview.querySelector('button')
+        
+        reviewBtn.addEventListener('click', reviewButtonHandler)
 
-    itemBody.append( itemName, itemPrice, addButon, leaveReview)
-    itemDiv.append(itemImage,itemBody)
-    itemMainDiv.append(itemDiv)
-
-  
-   
+        itemBody.append( itemName, itemPrice, leaveReview, addButon)
+        itemDiv.append(itemImage,itemBody)
+        itemMainDiv.append(itemDiv)
 
     itemImage.addEventListener("click", (event) => {
         itemMainDiv.innerHTML = ""
@@ -192,7 +197,7 @@ let turnItemIntoHTML = (item) => {
             revFormDiv.classList.add("form-group")
             let revTextArea = document.createElement("textarea")
             revTextArea.classList.add("form-control")
-            revTextArea.id = "review-content"
+            revTextArea.id = "create-review"
             revTextArea.rows = "2"
             let submitButton = document.createElement("button")
             submitButton.classList.add("btn", "btn-primary")
@@ -213,76 +218,67 @@ let turnItemIntoHTML = (item) => {
 // >>>>>>>>>>>>>>>>>>>review submit event thing<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     
 
-    newRevForm.addEventListener('submit', (evt) => {
-        evt.preventDefault()
-        debugger
-        fetch(`http://localhost:3000/reviews`, {
-            method: "POST",
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify({
-                content: evt.target["review-content"].value,
-                user_id: currentUser[0].id,
-                item_id: evt.target["item-id"].value
-            })
-        })
-        .then(resp => resp.json())
-        .then(newReview => {
-            item.reviews.push(newReview)
+    // newRevForm.addEventListener('submit', (evt) => {
+    //     evt.preventDefault()
+    //     debugger
+    //     fetch(`http://localhost:3000/reviews`, {
+    //         method: "POST",
+    //         headers: {"Content-type": "application/json"},
+    //         body: JSON.stringify({
+    //             content: evt.target["create-review"].value,
+    //             user_id: currentUser[0].id,
+    //             item_id: evt.target["item-id"].value
+    //         })
+    //     })
+    //     .then(resp => resp.json())
+    //     .then(newReview => {
+    //         item.reviews.push(newReview)
             
-        })
-    });
+    //     })
+    // });
 // >>>>>>>>>>>>>>>>>>>>>>>>>end<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    })
+})
 
     addButon.addEventListener("click", (event) => {
-        
-        addToOrder(item)
-        
-    })
-
-   
-        // create a new order item form with the userId and the item clicked by user
-        // 
-        // leaveReview.onclick = function (evt) {
-        //     // reviewContainerDiv.style.display = "block";
-        //     reviewItem(item)
-        // }
+    addToOrder(item)})
 }
+
+function reviewButtonHandler() {
+    hiddenFormInput.value = this.dataset.itemId
+    fetch(`http://localhost:3000/items/${this.dataset.itemId}`)
+    .then(resp => resp.json())
+    .then(data => {
+        reviewsUl.innerText = ""
+        
+        data.reviews.forEach(review => renderReview(review))
+    })}
+
+formFromModal.addEventListener("submit", function (evt) {
+    evt.preventDefault()
+    fetch(`http://localhost:3000/reviews`, {
+        method: "POST",
+        headers: {"Content-type": "application/json"},
+        body: JSON.stringify({
+            content: this["create-review"].value,
+            user_id: currentUser[0].id,
+            item_id: Number(this["item-id"].value)
+        })
+    })
+    .then(resp => resp.json())
+    .then(newReview => {    
+        renderReview(newReview)
+        this.reset()
+    })
+})
 
 // review modals
 
-// function reviewItem(item){
-//     // get the items reviews
-//     // display them
-//     // have a form that lets you add a review => userid\
-    
-//     let reviewDiv = document.createElement("div")
-//         reviewDiv.classList.add('modal');
-//         let itemReviews = document.createElement("div")
-//             // itemReviews.classList.add('modal-content');
-//             let reviewUl = document.createElement("ul")
-//                 // reviewUl.classList.add('list-group', 'list-group-flush')
-//                 item.reviews.forEach(rev =>{
-//                     let revLi = document.createElement("li")
-//                         // revLi.classList.add('list-group-item')
-//                         revLi.innerText = rev.content
-//                         reviewUl.append(revLi)
-//                 })
-//             itemReviews.append(reviewUl)
-//         let newReviewDiv = document.createElement("div")
-//             // newReviewDiv.classList.add('modal-content');
-//             let newRevForm = document.createElement("form")
-//                 newRevForm.innerHTML =`<div class="form-group">
-//                 <textarea class="form-control" id="review-content" rows="3"></textarea>  
-//                 <input type="submit"class="btn btn-primary"></input>
-//                 <input hidden id="item-id" value=${item.id} ><input>
-//                 </div>`
-//             newReviewDiv.append(newRevForm); 
-//     reviewDiv.append(itemReviews, newReviewDiv); 
-    
-//     reviewContainerDiv.append(reviewDiv);
-    
-// }
+function renderReview(reviewObj){
+    let revLi = document.createElement("li")
+        revLi.classList.add('list-group-item')
+        revLi.innerText = `${reviewObj.content} - ${currentUser[0].username}`
+        reviewsUl.append(revLi)
+ }
 
 // review modal ends
 
@@ -343,6 +339,7 @@ function addToOrder(item){
         })
 
 }
+
 let homeButt = document.querySelector("#homeBtn")
 
     cartBtn.addEventListener("click", (evt) => checkout(event))
@@ -352,7 +349,7 @@ let homeButt = document.querySelector("#homeBtn")
         console.log("IVE BEEN CLICKED")
         mainDisplay()
         checkoutPage.hidden = true
-        itemMainDiv.hidden = tru
+        itemMainDiv.hidden = false
 })
 
 function checkout (event){

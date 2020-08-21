@@ -31,8 +31,6 @@
                 <button class="btn" id="homeBtn">Home</button>
             
                 <!--home button shows main page  -->
-                
-
                 <button class="btn"  id= "login">Log In</button>
                 <button class="btn shopping-cart"  id="cartBtn"> 
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -51,6 +49,7 @@
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
+              <!-- above add active -->
             <img src="https://static.zara.net/photos///2020/I/0/1/p/6585/001/052/2/w/2352/6585001052_9_1_1.jpg?ts=1593602297345" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
@@ -71,16 +70,10 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
         </a>
-      </div>
+    </div>
 
 
     <!-- end carosel -->
-
-    <div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-        <div class="modal-dialog modal-xl" id="itemReview" ></div>
-
-    </div>
 
 
 
@@ -128,6 +121,56 @@
             </div>
         </div>
     </div>
+
+
+
+
+    <!-- !-- MODAL DIVS --> 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header badge-light">
+          <h5 class="modal-title" id="exampleModalLabel">New Review</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class= "new-review-form-modal">
+            <div class="form-group">
+              <input type="hidden" name="item-id"value="item-id" id="item-id">
+            </div>
+            <div class="form-group">
+              <!-- <label for="message-text" class="col-form-label">Review:</label> -->
+              <textarea class="form-control" id="create-review" rows="2" placeholder="Review"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info" data-dismiss="modal"> Back </button>
+                <button type="submit" class="btn btn-outline-danger">Submit Review</button>
+            </div>
+          </form>
+
+          <div class="item-reviews modal-dialog modal-dialog-scrollable d-flex flex-column">
+            <h5 class="list-group-item list-group-item-danger">Reviews</h5>
+            <ul class="list-group list-group-flush" id="reviews-list">
+                <li class="list-group-item">All my friends are jealous of me because of this item!</li>
+            </ul>
+          </div>
+          
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
+
+
+  
+
+
+
+<!-- MODAL DIVSS -->
     <!-- bootstrap stuff -->
     <script defer src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
