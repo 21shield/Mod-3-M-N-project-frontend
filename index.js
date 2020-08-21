@@ -1,5 +1,9 @@
+// checkout form
 
-// import 'bootstrap';
+let checkoutForm = document.querySelector("#checkout-form")
+
+let addedItems = document.querySelector("#order-sidebar")
+
 // >>>>>>>>>>>>>
 
 let formFromModal = document.querySelector(".new-review-form-modal")
@@ -10,7 +14,8 @@ let reviewsUl = document.querySelector("#reviews-list")
 
 let homePage = document.querySelector("#main-page")
 let itemMainDiv = document.querySelector("div#items")
-let orderSideBar = document.querySelector("#order-sidebar")
+
+
 let loginLink = document.querySelector("#login")
 let loginFormDiv = document.querySelector("#loginform")
 
@@ -18,8 +23,8 @@ let checkoutPage = document.querySelector("#checkout-page")
 let cartDiv = document.querySelector("#cart-items")
 
 let cartBtn = document.querySelector("#cartBtn")
-let checkoutBtn = document.querySelector("#checkout")
-
+ let checkoutBtn = document.querySelector("#checkout")
+let orderSideBar = document.querySelector("#mySidebar")
 let cartTotal = document.querySelector("#items-total")
 let totalPrice = document.querySelector("#total")
 
@@ -69,22 +74,25 @@ loginLink.addEventListener("click", (event) => {
                     loginLink.hidden = false
                     loginFormDiv.innerHTML = ""
                     loginFormDiv.innerText = `Welcome ${user.username}`
-                    // newOrder(user)
+                    newOrder(user)
                     userId = user.id
+                    
                     orderId = user.orders[0].id
+                    
                     getOrderItems()
-                    checkoutBtn.hidden = false
+                    // checkoutBtn.hidden = false
                     currentUser.push(user)
                     
                 } else {
-                    console.log("this is line 48", user)
+                    alert("User does not Exist")
                 }
             })
         })
     }else{
         loginLink.innerText = "Log In"
-
+        checkoutForm.hidden = true
         currentUser.pop()
+        mainDisplay()
     }
 })
 
@@ -106,6 +114,7 @@ let newOrder = (user) => {
         .then((rsp) => rsp.json())
         .then(newOrder => {
             orderId = newOrder.id
+            
             // user.orders.push(newOrder)
             // user.orders[0].items.forEach(item => showItemOnSideBar(item))
         })
@@ -115,7 +124,7 @@ let newOrder = (user) => {
         let items = []
         let orderItems = []
         
-        debugger
+        
         currentOrder.items.forEach(item => items.push(item))
         currentOrder.order_items.forEach(orderItem => orderItems.push(orderItem))
 
@@ -152,6 +161,7 @@ let turnItemIntoHTML = (item) => {
     let itemDiv = document.createElement("div")
         itemDiv.classList.add("card");
 
+    // let imageMagni
     let itemImage = document.createElement("img")
         itemImage.src = item.image
         itemImage.classList.add('card-img-top');
@@ -282,12 +292,18 @@ function renderReview(reviewObj){
 let showItemOnSideBar = (item, id) => {
     // add item to users order
     let orderItem = document.createElement("div")
-    orderItem.innerHTML = `<h3>${item.name}</h3>`
-    let removeItem = document.createElement("button")
+    let itemName = document.createElement("a")
+        itemName.innerText = `❀ ${item.name} 
+        Price: $ ${item.price}.oo 
+        Qty: 1 `
+        itemName.classList.add('a-cart');
+    let removeItem = document.createElement("a")
+        removeItem.classList.add("btn","btn-outline")
         removeItem.id = id
-        removeItem.innerText = "remove"
-    orderItem.append(removeItem)
-    orderSideBar.append(orderItem)
+        removeItem.innerText = "𝕏"
+        itemName.append(removeItem)
+    orderItem.append(itemName)
+    addedItems.append(orderItem)
 
     removeItem.addEventListener("click", (evt) => {
         orderItem.innerText = ""
@@ -304,9 +320,9 @@ let showItemOnSideBar = (item, id) => {
 }
     
 function addToOrder(item){
-    let currentOrder = currentUser[0].orders[0]
+    let currentOrder = currentUser[0].orders[0]   
       currentUser[0].orders[0].items.push(item)
-   
+
     fetch(`http://localhost:3000/order_items`, {
         method: "POST",
         headers: {
@@ -336,16 +352,16 @@ let homeButt = document.querySelector("#homeBtn")
     cartBtn.addEventListener("click", (evt) => checkout(event))
     checkoutBtn.addEventListener("click", (evt) => checkout(event))
 
-    homeButt.addEventListener("click", (evt) => {
-        console.log("IVE BEEN CLICKED")
-        mainDisplay()
-        checkoutPage.hidden = true
-        itemMainDiv.hidden = false
+homeButt.addEventListener("click", (evt) => {
+    console.log("IVE BEEN CLICKED")
+    mainDisplay()
+    // checkoutPage.hidden = true
+    // itemMainDiv.hidden = false
 })
 
 function checkout (event){
-    homePage.innerHTML = ""
-    checkoutPage.hidden = false
+    // homePage.innerHTML = ""
+    checkoutForm.hidden = false
     
     console.log(currentUser[0].orders[0].items);
     let priceArray = []
@@ -354,32 +370,32 @@ function checkout (event){
         
         homePage.hidden = true
         // access the order
-        cartDiv.innerHTML = ""
+         cartDiv.innerHTML = ""
 
         currentUser[0].orders[0].items.forEach((item) => {
             
             priceArray.push(item.price)
            
-            let orderItemDiv = document.createElement("div")
-            let itemImg = document.createElement("img")
-                itemImg.src = item.image
-            let itemName = document.createElement("h2")
-                itemName.innerText = item.name
-            let itemDescription = document.createElement("p")
-                itemDescription.innerText = item.description
-            let itemPrice = document.createElement("p")
-                itemPrice.innerText = `$ ${item.price}.00`
-            let itemCategory = document.createElement("span")
-                itemCategory.innerText = item.category
-            let removeItem = document.createElement("button")
-                removeItem.innerText = "remove"
-            orderItemDiv.append(itemImg, itemName, itemDescription, itemPrice, itemCategory,removeItem)
-            cartDiv.append(orderItemDiv)
+            // let orderItemDiv = document.createElement("div")
+            // let itemImg = document.createElement("img")
+            //     itemImg.src = item.image
+            // let itemName = document.createElement("h2")
+            //     itemName.innerText = item.name
+            // let itemDescription = document.createElement("p")
+            //     itemDescription.innerText = item.description
+            // let itemPrice = document.createElement("p")
+            //     itemPrice.innerText = `$ ${item.price}.00`
+            // let itemCategory = document.createElement("span")
+            //     itemCategory.innerText = item.category
+            // let removeItem = document.createElement("button")
+            //     removeItem.innerText = "remove"
+            // orderItemDiv.append(itemImg, itemName, itemDescription, itemPrice, itemCategory,removeItem)
+            // cartDiv.append(orderItemDiv)
 
             showItemListTotal(item)
-            removeItem.addEventListener("click",(evt) => {
-                removeItemFromOrder(item)
-            })
+            // removeItem.addEventListener("click",(evt) => {
+            //     removeItemFromOrder(item)
+            // })
         })
         showOrderTotal(priceArray)   
     }else{
@@ -390,15 +406,21 @@ function checkout (event){
 
 
 let showItemListTotal = (itemObj) => {
+    
+    let checkoutItem = document.createElement("li")
+        checkoutItem.classList.add("list-group-item","d-flex", "justify-content-between", "lh-condensed")
+        let itemDiv = document.createElement("div")
 
-    let checkoutItem = document.createElement("div")
-        let itemName = document.createElement("h4")
+            let itemName = document.createElement("h6")
+            itemName.classList.add("my-0")
             itemName.innerText = itemObj.name
-        let itemPrice = document.createElement("span")
-        itemPrice.innerText = `$ ${itemObj.price}`
-        itemName.append(itemPrice)
-        checkoutItem.append(itemName)
-        cartTotal.append(checkoutItem)
+            itemDiv.append(itemName)
+
+            let itemPrice = document.createElement("span")
+                itemPrice.innerText = `$ ${itemObj.price}`
+        
+        checkoutItem.append(itemDiv, itemPrice)
+        cartTotal.prepend(checkoutItem)
 
         
 }
@@ -407,28 +429,51 @@ let showItemListTotal = (itemObj) => {
 let showOrderTotal = (array) => {
     
     let total = array.reduce((num1, num2) => num1 + num2)
-    let totalH1 = document.createElement("h1")
-    totalH1.innerText = total
-    totalPrice.append(totalH1)
+   
+    totalPrice.innerHTML = ` <span>Total (USD)</span>
+    <strong>$ ${total}</strong>`
 
 }
 
 placeOrder.addEventListener("click", (evt) => {
-    
+    evt.preventDefault()
+    checkoutForm.hidden = true
+
     let id = currentUser[0].orders[0].id
     fetch(`http://localhost:3000/orders/${id}`, {
         method: 'DELETE'
     })
     .then(resp => resp.json())
     .then(obj =>{
-        checkoutPage.innerHTML = ""
-        orderSideBar.innerHTML = ""
+        // checkoutPage.innerHTML = ""
+        // orderSideBar.innerHTML = ""
         currentUser[0].orders.pop()
         newOrder(currentUser[0])
+
+        addedItems.innerHTML = ""
         alert("order has been  placed")
+       
+        homePage.hidden = false 
     })
 })
 
 
 
 
+
+
+
+// side bar animation
+let sideBarbtn = document.querySelector(".openbtn")
+
+sideBarbtn.addEventListener("click", openNav)
+
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
+  
+  function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+  }
