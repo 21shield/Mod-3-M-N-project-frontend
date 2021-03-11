@@ -365,7 +365,6 @@ function checkout (event){
     
     console.log(currentUser[0].orders[0].items);
     let priceArray = []
-    console.log(currentUser)
     if(currentUser.length === 1){
         
         homePage.hidden = true
@@ -399,7 +398,7 @@ function checkout (event){
         })
         showOrderTotal(priceArray)   
     }else{
-        console.log("you need to sign in ");
+        console.log("You need to sign in.");
     }
 }
 
@@ -473,7 +472,7 @@ function openNav() {
     document.getElementById("main").style.marginLeft = "250px";
   }
   
-  function closeNav() {
+function closeNav() {
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft= "0";
-  }
+}
