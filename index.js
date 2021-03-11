@@ -349,8 +349,8 @@ function addToOrder(item){
 
 let homeButt = document.querySelector("#homeBtn")
 
-    cartBtn.addEventListener("click", (evt) => checkout(event))
-    checkoutBtn.addEventListener("click", (evt) => checkout(event))
+cartBtn.addEventListener("click", (evt) => checkout(evt))
+checkoutBtn.addEventListener("click", (evt) => checkout(evt))
 
 homeButt.addEventListener("click", (evt) => {
     console.log("IVE BEEN CLICKED")
@@ -365,7 +365,7 @@ function checkout (event){
     
     console.log(currentUser[0].orders[0].items);
     let priceArray = []
-    
+    console.log(currentUser)
     if(currentUser.length === 1){
         
         homePage.hidden = true
