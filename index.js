@@ -353,17 +353,12 @@ cartBtn.addEventListener("click", (evt) => checkout(evt))
 checkoutBtn.addEventListener("click", (evt) => checkout(evt))
 
 homeButt.addEventListener("click", (evt) => {
-    console.log("IVE BEEN CLICKED")
     mainDisplay()
-    // checkoutPage.hidden = true
-    // itemMainDiv.hidden = false
 })
 
 function checkout (event){
-    // homePage.innerHTML = ""
     checkoutForm.hidden = false
     
-    console.log(currentUser[0].orders[0].items);
     let priceArray = []
     if(currentUser.length === 1){
         
@@ -374,31 +369,13 @@ function checkout (event){
         currentUser[0].orders[0].items.forEach((item) => {
             
             priceArray.push(item.price)
-           
-            // let orderItemDiv = document.createElement("div")
-            // let itemImg = document.createElement("img")
-            //     itemImg.src = item.image
-            // let itemName = document.createElement("h2")
-            //     itemName.innerText = item.name
-            // let itemDescription = document.createElement("p")
-            //     itemDescription.innerText = item.description
-            // let itemPrice = document.createElement("p")
-            //     itemPrice.innerText = `$ ${item.price}.00`
-            // let itemCategory = document.createElement("span")
-            //     itemCategory.innerText = item.category
-            // let removeItem = document.createElement("button")
-            //     removeItem.innerText = "remove"
-            // orderItemDiv.append(itemImg, itemName, itemDescription, itemPrice, itemCategory,removeItem)
-            // cartDiv.append(orderItemDiv)
+        
 
             showItemListTotal(item)
-            // removeItem.addEventListener("click",(evt) => {
-            //     removeItemFromOrder(item)
-            // })
         })
         showOrderTotal(priceArray)   
     }else{
-        console.log("You need to sign in.");
+        alert("You need to sign in.");
     }
 }
 
