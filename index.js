@@ -257,7 +257,7 @@ function reviewButtonHandler() {
         reviewsUl.innerText = ""
         
         data.reviews.forEach(review => renderReview(review))
-    })}
+})}
 
 formFromModal.addEventListener("submit", function (evt) {
     evt.preventDefault()
@@ -284,7 +284,7 @@ function renderReview(reviewObj){
         revLi.classList.add('list-group-item')
         revLi.innerText = `${reviewObj.content} - ${currentUser[0].username}`
         reviewsUl.append(revLi)
- }
+}
 
 // review modal ends
 
@@ -379,8 +379,6 @@ function checkout (event){
     }
 }
 
-
-
 let showItemListTotal = (itemObj) => {
     
     let checkoutItem = document.createElement("li")
@@ -397,8 +395,7 @@ let showItemListTotal = (itemObj) => {
         
         checkoutItem.append(itemDiv, itemPrice)
         cartTotal.prepend(checkoutItem)
-
-        
+    
 }
 
 
