@@ -9,6 +9,11 @@ This is the frontend repo of Sundar, an e-commerce app for women's accessories. 
 ### Prerequisites
 
 1. Install the [Sundar Rails Backend API](https://github.com/21shield/Mod-3-MN-backend)
+
+### Starting the Frontend
+1. Clone this repository and `cd` into the directory
+2. Start the Frontend server using `open index.html`
+
 ### Media
 Add Items  |  View Cart | Purchase Items
 :-------------------------:|:-------------------------:|:-------------------------:
@@ -21,9 +26,6 @@ Add Items  |  View Cart | Purchase Items
 * PostgreSQL DB
 * HTML/CSS
 
-### Starting the Frontend
-1. Clone this repository and `cd` into the directory
-2. Start the Frontend server using `open index.html`
 
 
 [Backend Repo](https://github.com/21shield/Mod-3-MN-backend)
