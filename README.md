@@ -4,7 +4,7 @@
 # 
 ## Sundar Frontend
 
-This is the frontend repo of Sundar, an e-commerce app for women's accessories. Sundar means Beautiful in Hindi.
+This is the frontend repo of Sundar, an e-commerce app for women's accessories. All women are beautiful tresures thats why we chose the name Sundar which means Beautiful in Hindi.
 
 ### Prerequisites
 
