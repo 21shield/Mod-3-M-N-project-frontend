@@ -17,9 +17,8 @@ This is the frontend repo of Sundar, an e-commerce app for women's accessories. 
 ### Media
 Add Items  |  View Cart | Purchase Items
 :-------------------------:|:-------------------------:|:-------------------------:
-![Sale Items](./assets/Sale_items.png)  |  ![Cart Items](./assets/Cart_items.png) |![Billing](./assets/billing.png)
+![Sale Items](./assets/Sale_items.png)  |  ![Cart Items](./assets/Cart_items.png) 
 
-<img src="./assets/Sale_items.png" alt="usersPage">
 ### Tech Stack
 
 * Vanilla Javascript
