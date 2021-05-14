@@ -277,7 +277,6 @@ formFromModal.addEventListener("submit", function (evt) {
     })
 })
 
-// review modals
 
 function renderReview(reviewObj){
     let revLi = document.createElement("li")
@@ -286,7 +285,6 @@ function renderReview(reviewObj){
         reviewsUl.append(revLi)
 }
 
-// review modal ends
 
 
 let showItemOnSideBar = (item, id) => {
