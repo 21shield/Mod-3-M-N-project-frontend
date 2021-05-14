@@ -15,9 +15,12 @@ This is the frontend repo of Sundar, an e-commerce app for women's accessories. 
 2. Start the Frontend server using `open index.html`
 
 ### Media
-Add Items  |  View Cart | Purchase Items
-:-------------------------:|:-------------------------:|:-------------------------:
-![](./assets/Sale_items.png)  |  ![](./assets/Cart_items.png) |![](./assets/billing.png)
+
+<p align="center">
+  <img src="./assets/Sale_items.png" width="150" alt="sale items">
+  <img src="./assets/Cart_items.png" width="150" alt="cart items">
+  <img src="./assets/billing.png" width="150" alt="billing">
+</p>
 
 ### Tech Stack
 
