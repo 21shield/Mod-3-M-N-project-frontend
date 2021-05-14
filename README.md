@@ -2,7 +2,9 @@
 
 ## Sundar Frontend
 
-This is the frontend repo of Sundar, an e-commerce app for women's accessories. 
+This is the frontend repo of Sundar, an e-commerce app for women's accessories.
+
+![search](./assets/SundarCaroselGif.gif)
 
 ### Tech Stack
 
