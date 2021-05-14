@@ -316,7 +316,7 @@ let showItemOnSideBar = (item, id) => {
         })
     })
 }
-    
+
 function addToOrder(item){
     let currentOrder = currentUser[0].orders[0]   
       currentUser[0].orders[0].items.push(item)
