@@ -4,7 +4,7 @@
 
 This is the frontend repo of Sundar, an e-commerce app for women's accessories.
 
-![search](./assets/SundarCaroselGif.gif)
+![search](./assets/Sundar_CaroselGif.gif)
 
 ### Tech Stack
 
