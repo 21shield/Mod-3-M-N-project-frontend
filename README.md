@@ -19,7 +19,7 @@ Add Items  |  View Cart | Purchase Items
 :-------------------------:|:-------------------------:|:-------------------------:
 ![Sale Items](./assets/Sale_items.png)  |  ![Cart Items](./assets/Cart_items.png) |![Billing](./assets/billing.png)
 
-
+<img src="./assets/Sale_items.png" alt="usersPage">
 ### Tech Stack
 
 * Vanilla Javascript
